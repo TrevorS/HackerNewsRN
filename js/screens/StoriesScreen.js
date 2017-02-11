@@ -11,6 +11,13 @@ const StoriesScreen = ({ navigation }) => (
   </View>
 );
 
+StoriesScreen.propTypes = {
+  navigation: React.PropTypes.shape({
+    navigate: React.PropTypes.func.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 StoriesScreen.navigationOptions = {
   title: 'Stories',
 };

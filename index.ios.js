@@ -34,13 +34,16 @@ const initialNavState = {
 };
 
 const AppReducer = combineReducers({
-  nav: (state = initialNavState, action) => {
-    return AppNavigator.router.getStateForAction(action, state);
-  },
-})
+  nav: (state = initialNavState, action) =>
+    AppNavigator.router.getStateForAction(action, state),
+});
 
-class HackerNewsRN extends React.Component {
-  store = createStore(AppReducer, undefined, autoRehydrate());
+class HackerNewsRN extends Component {
+  constructor(props) {
+    super(props);
+
+    this.store = createStore(AppReducer, undefined, autoRehydrate());
+  }
 
   componentDidMount() {
     persistStore(this.store, { storage: AsyncStorage });

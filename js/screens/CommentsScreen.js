@@ -11,6 +11,13 @@ const CommentsScreen = ({ navigation }) => (
   </View>
 );
 
+CommentsScreen.propTypes = {
+  navigation: React.PropTypes.shape({
+    navigate: React.PropTypes.func.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 CommentsScreen.navigationOptions = {
   title: 'Comments',
 };
