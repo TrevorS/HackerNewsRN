@@ -1,53 +1,58 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { AppRegistry, AsyncStorage } from 'react-native';
+import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
-export default class HackerNewsRN extends Component {
+import { createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
+
+import { persistStore, autoRehydrate } from 'redux-persist';
+
+import StoriesScreen from './js/screens/StoriesScreen';
+import CommentsScreen from './js/screens/CommentsScreen';
+
+const AppNavigator = StackNavigator({
+  Stories: {
+    screen: StoriesScreen,
+  },
+  Comments: {
+    screen: CommentsScreen,
+  },
+});
+
+const AppWithNavigationState = connect(state => ({
+  nav: state.nav,
+}))(({ dispatch, nav }) => (
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+));
+
+const initialNavState = {
+  index: 0,
+  routes: [
+    { key: 'InitA', routeName: 'Stories' },
+    { key: 'InitB', routeName: 'Comments' },
+  ],
+};
+
+const AppReducer = combineReducers({
+  nav: (state = initialNavState, action) => {
+    return AppNavigator.router.getStateForAction(action, state);
+  },
+})
+
+class HackerNewsRN extends React.Component {
+  store = createStore(AppReducer, undefined, autoRehydrate());
+
+  componentDidMount() {
+    persistStore(this.store, { storage: AsyncStorage });
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Provider store={this.store}>
+        <AppWithNavigationState />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('HackerNewsRN', () => HackerNewsRN);
