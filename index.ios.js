@@ -4,6 +4,7 @@ import { addNavigationHelpers } from 'react-navigation';
 
 import { compose, applyMiddleware, createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import { persistStore, autoRehydrate } from 'redux-persist';
 import createLogger from 'redux-logger';
@@ -26,7 +27,7 @@ class HackerNewsRN extends Component {
     this.store = createStore(AppReducer,
       undefined,
       compose(
-        applyMiddleware(logger),
+        applyMiddleware(thunk, logger),
         autoRehydrate(),
       ),
     );
