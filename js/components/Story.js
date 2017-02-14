@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 
 const Story = ({ story }) => (
-  <Text>This is about {story.title}.</Text>
+  <Text>{story.title}</Text>
 );
 
 Story.propTypes = {

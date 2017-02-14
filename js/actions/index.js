@@ -1,16 +1,14 @@
+import { HN } from '../firebase';
+
 export const REQUEST_STORIES = 'REQUEST_STORIES';
 export const RECEIVE_STORIES = 'RECEIVE_STORIES';
 
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 
-const stories = [
-  { id: 1, title: 'First Story Dude' },
-  { id: 2, title: 'Second Story' },
-  { id: 3, title: 'Third Story' },
-];
+const hackerNews = new HN();
 
-const comments = [
+const newComments = [
   { id: 1, title: 'First Comment' },
   { id: 2, title: 'Second Comment' },
   { id: 3, title: 'Third Comment' },
@@ -22,7 +20,7 @@ export function requestStories() {
   };
 }
 
-function receiveStories() {
+function receiveStories(stories) {
   return {
     type: RECEIVE_STORIES,
     stories,
@@ -33,7 +31,9 @@ function receiveStories() {
 export function fetchStories() {
   return (dispatch) => {
     dispatch(requestStories());
-    return dispatch(receiveStories());
+
+    return hackerNews.getTopStories().then(stories =>
+      dispatch(receiveStories(stories)));
   };
 }
 
@@ -44,7 +44,7 @@ function requestComments(storyId) {
   };
 }
 
-function receiveComments(storyId) {
+function receiveComments(storyId, comments) {
   return {
     type: RECEIVE_COMMENTS,
     storyId,
@@ -56,6 +56,6 @@ function receiveComments(storyId) {
 export function fetchComments(storyId) {
   return (dispatch) => {
     dispatch(requestComments(storyId));
-    return dispatch(receiveComments(storyId));
+    return dispatch(receiveComments(storyId, newComments));
   };
 }
