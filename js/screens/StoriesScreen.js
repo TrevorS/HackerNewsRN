@@ -1,15 +1,10 @@
 import React from 'react';
-import { View, Button } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { View } from 'react-native';
 
 import { StoryListContainer } from '../containers';
 
-const StoriesScreen = ({ navigation }) => (
+const StoriesScreen = () => (
   <View>
-    <Button
-      title="Hello"
-      onPress={() => navigation.dispatch(NavigationActions.navigate({ routeName: 'Comments' }))}
-    />
     <StoryListContainer />
   </View>
 );
@@ -22,7 +17,7 @@ StoriesScreen.propTypes = {
 };
 
 StoriesScreen.navigationOptions = {
-  title: 'Stories',
+  title: 'HackerNewsRN',
 };
 
 export default StoriesScreen;

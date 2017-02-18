@@ -30,4 +30,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(StoryListContainer);
+function mapDispatchToProps(dispatch) {
+  return {
+    onStoryClick: () => console.log('clicked'),
+    dispatch,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoryListContainer);
