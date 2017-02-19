@@ -59,7 +59,7 @@ Story.propTypes = {
     title: React.PropTypes.string.isRequired,
     by: React.PropTypes.string.isRequired,
     hoursSince: React.PropTypes.number.isRequired,
-    url: React.PropTypes.string.isRequired,
+    url: React.PropTypes.string,
     score: React.PropTypes.number.isRequired,
     commentCount: React.PropTypes.number.isRequired,
   }).isRequired,

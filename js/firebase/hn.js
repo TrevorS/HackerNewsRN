@@ -3,6 +3,8 @@ import { firebaseDB } from './';
 const hoursSince = time =>
   Math.floor(Math.abs(new Date() - new Date(time * 1000)) / 3.6e6);
 
+const commentCount = descendants => descendants || 0;
+
 const createStory = story => ({
   id: story.val().id,
   title: story.val().title,
@@ -10,7 +12,7 @@ const createStory = story => ({
   hoursSince: hoursSince(story.val().time),
   url: story.val().url,
   score: story.val().score,
-  commentCount: story.val().descendants,
+  commentCount: commentCount(story.val().descendants),
 });
 
 class HN {
