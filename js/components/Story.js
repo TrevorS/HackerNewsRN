@@ -1,56 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+
+import StoryDetails from './StoryDetails';
+import StoryMetrics from './StoryMetrics';
 
 const styles = StyleSheet.create({
   story: {
     margin: 15,
   },
-  header: {
-    fontFamily: 'Helvetica Neue',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  by: {
-    fontSize: 8,
-  },
-  time: {
-    fontSize: 8,
-  },
-  url: {
-    fontSize: 6,
-  },
 });
 
 const Story = ({ story }) => (
-  <View style={styles.story}>
-    <View style={styles.details}>
-      <Text style={styles.header}>
-        {story.title}
-      </Text>
-
-      <Text style={styles.by}>
-        {story.by}
-      </Text>
-
-      <Text style={styles.time}>
-        {`${story.hoursSince}H`}
-      </Text>
-
-      <Text style={styles.url}>
-        {story.url}
-      </Text>
+  <TouchableOpacity>
+    <View style={styles.story}>
+      <StoryDetails story={story} />
+      <StoryMetrics story={story} />
     </View>
-
-    <View style={styles.scoreAndComments}>
-      <Text style={styles.score}>
-        {story.score}
-      </Text>
-
-      <Text style={styles.commentCount}>
-        {story.commentCount}
-      </Text>
-    </View>
-  </View>
+  </TouchableOpacity>
 );
 
 Story.propTypes = {
