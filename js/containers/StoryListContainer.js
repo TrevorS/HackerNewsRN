@@ -1,40 +1,15 @@
-import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchStories } from '../actions';
 import { StoryList } from '../components';
 
-class StoryListContainer extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchStories());
-  }
+const mapStateToProps = state => ({
+  stories: state.stories.items,
+  isFetching: state.stories.isFetching,
+});
 
-  render() {
-    return (
-      <StoryList stories={this.props.stories} />
-    );
-  }
-}
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchStories }, dispatch);
 
-StoryListContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  stories: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      title: React.PropTypes.string.isRequired,
-    })).isRequired,
-};
-
-function mapStateToProps(state) {
-  return {
-    stories: state.stories.items,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onStoryClick: () => console.log('clicked'),
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(StoryListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(StoryList);
