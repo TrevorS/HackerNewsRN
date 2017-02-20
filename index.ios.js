@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { AppRegistry, AsyncStorage } from 'react-native';
+import { AppRegistry } from 'react-native';
 import { addNavigationHelpers } from 'react-navigation';
 
-import { compose, applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import { persistStore, autoRehydrate } from 'redux-persist';
 import createLogger from 'redux-logger';
 
 import AppNavigator from './js/navigation';
@@ -24,17 +23,7 @@ class HackerNewsRN extends Component {
 
     const logger = createLogger();
 
-    this.store = createStore(AppReducer,
-      undefined,
-      compose(
-        applyMiddleware(thunk, logger),
-        autoRehydrate(),
-      ),
-    );
-  }
-
-  componentDidMount() {
-    persistStore(this.store, { storage: AsyncStorage });
+    this.store = createStore(AppReducer, applyMiddleware(thunk, logger));
   }
 
   render() {
