@@ -21,15 +21,21 @@ function stories(state = {
 }, action) {
   switch (action.type) {
     case REQUEST_STORIES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        page: action.page,
         isFetching: true,
-      });
+      };
     case RECEIVE_STORIES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
-        items: action.stories,
+        items: [
+          ...state.items,
+          ...action.stories,
+        ],
         lastUpdated: action.receivedAt,
-      });
+      };
     default:
       return state;
   }
@@ -41,15 +47,17 @@ function comments(state = {
 }, action) {
   switch (action.type) {
     case REQUEST_COMMENTS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
-      });
+      };
     case RECEIVE_COMMENTS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         items: action.comments,
         lastUpdated: action.receivedAt,
-      });
+      };
     default:
       return state;
   }

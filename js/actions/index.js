@@ -14,9 +14,10 @@ const newComments = [
   { id: 3, title: 'Third Comment' },
 ];
 
-export function requestStories() {
+export function requestStories(page) {
   return {
     type: REQUEST_STORIES,
+    page,
   };
 }
 
@@ -28,11 +29,11 @@ function receiveStories(stories) {
   };
 }
 
-export function fetchStories() {
+export function fetchStories(page) {
   return (dispatch) => {
-    dispatch(requestStories());
+    dispatch(requestStories(page));
 
-    return hackerNews.getTopStories().then(stories =>
+    return hackerNews.getTopStories(page).then(stories =>
       dispatch(receiveStories(stories)));
   };
 }
