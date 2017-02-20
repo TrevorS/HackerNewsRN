@@ -24,6 +24,7 @@ class StoryList extends Component {
     };
 
     this.onRefresh = this.onRefresh.bind(this);
+    this.onEndReached = this.onEndReached.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +44,12 @@ class StoryList extends Component {
     });
 
     this.props.fetchStories();
+  }
+
+  onEndReached(scrollEvent) {
+    if (scrollEvent && !this.props.isFetching) {
+      this.props.fetchStories(this.props.page + 1);
+    }
   }
 
   render() {
@@ -65,6 +72,8 @@ class StoryList extends Component {
           />
         }
 
+        onEndReached={this.onEndReached}
+
         enableEmptySections
       />
     );
@@ -79,6 +88,7 @@ StoryList.propTypes = {
   ).isRequired,
   isFetching: React.PropTypes.bool.isRequired,
   fetchStories: React.PropTypes.func.isRequired,
+  page: React.PropTypes.number.isRequired,
 };
 
 export default StoryList;

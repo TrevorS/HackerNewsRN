@@ -21,20 +21,21 @@ export function requestStories(page) {
   };
 }
 
-function receiveStories(stories) {
+function receiveStories(page, stories) {
   return {
     type: RECEIVE_STORIES,
+    page,
     stories,
     receivedAt: Date.now(),
   };
 }
 
-export function fetchStories(page) {
+export function fetchStories(page = 1) {
   return (dispatch) => {
     dispatch(requestStories(page));
 
     return hackerNews.getTopStories(page).then(stories =>
-      dispatch(receiveStories(stories)));
+      dispatch(receiveStories(page, stories)));
   };
 }
 

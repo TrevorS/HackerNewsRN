@@ -18,6 +18,7 @@ const initialNavState = {
 function stories(state = {
   isFetching: false,
   items: [],
+  page: 1,
 }, action) {
   switch (action.type) {
     case REQUEST_STORIES:
