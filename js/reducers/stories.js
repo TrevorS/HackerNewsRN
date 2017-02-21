@@ -1,4 +1,4 @@
-import { REQUEST_STORIES, RECEIVE_STORIES } from '../actions';
+import { REQUEST_STORIES, RECEIVE_STORIES } from '../actions/types';
 
 const initialState = {
   isFetching: false,

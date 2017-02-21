@@ -1,4 +1,4 @@
-import { REQUEST_COMMENTS, RECEIVE_COMMENTS } from '../actions';
+import { REQUEST_COMMENTS, RECEIVE_COMMENTS } from '../actions/types';
 
 const initialState = {
   isFetching: false,

@@ -1,63 +1,22 @@
 import { HN } from '../firebase';
 
-export const REQUEST_STORIES = 'REQUEST_STORIES';
-export const RECEIVE_STORIES = 'RECEIVE_STORIES';
-
-export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+import { requestStories, receiveStories } from './stories';
+import { requestComments, receiveComments } from './comments';
 
 const hackerNews = new HN();
 
-const newComments = [
-  { id: 1, title: 'First Comment' },
-  { id: 2, title: 'Second Comment' },
-  { id: 3, title: 'Third Comment' },
-];
+const fetchStories = (page = 1) => (dispatch) => {
+  dispatch(requestStories(page));
 
-export function requestStories(page) {
-  return {
-    type: REQUEST_STORIES,
-    page,
-  };
-}
+  return hackerNews.getTopStories(page).then(stories =>
+    dispatch(receiveStories(page, stories)));
+};
 
-function receiveStories(page, stories) {
-  return {
-    type: RECEIVE_STORIES,
-    page,
-    stories,
-    receivedAt: Date.now(),
-  };
-}
+const fetchComments = storyId => (dispatch) => {
+  dispatch(requestComments(storyId));
 
-export function fetchStories(page = 1) {
-  return (dispatch) => {
-    dispatch(requestStories(page));
+  return hackerNews.getComments(storyId).then(comments =>
+    dispatch(receiveComments(storyId, comments)));
+};
 
-    return hackerNews.getTopStories(page).then(stories =>
-      dispatch(receiveStories(page, stories)));
-  };
-}
-
-function requestComments(storyId) {
-  return {
-    type: REQUEST_COMMENTS,
-    storyId,
-  };
-}
-
-function receiveComments(storyId, comments) {
-  return {
-    type: RECEIVE_COMMENTS,
-    storyId,
-    comments,
-    receivedAt: Date.now(),
-  };
-}
-
-export function fetchComments(storyId) {
-  return (dispatch) => {
-    dispatch(requestComments(storyId));
-    return dispatch(receiveComments(storyId, newComments));
-  };
-}
+export { fetchStories, fetchComments };
