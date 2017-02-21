@@ -18,7 +18,7 @@ const stories = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        items: [
+        items: action.page === 1 ? action.stories : [
           ...state.items,
           ...action.stories,
         ],
