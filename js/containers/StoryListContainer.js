@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchStories } from '../actions';
+import { fetchStories, fetchComments } from '../actions';
 import { StoryList } from '../components';
 
 const mapStateToProps = state => ({
@@ -11,6 +11,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchStories }, dispatch);
+  bindActionCreators({ fetchStories, fetchComments }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryList);
