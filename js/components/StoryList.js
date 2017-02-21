@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, ListView, View, RefreshControl } from 'react-native';
+
+import { StyleSheet,
+         ListView,
+         View,
+         RefreshControl } from 'react-native';
 
 import Story from './Story';
 
@@ -23,6 +27,7 @@ class StoryList extends Component {
       refreshing: false,
     };
 
+    this.onPress = this.onPress.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.onEndReached = this.onEndReached.bind(this);
   }
@@ -36,6 +41,10 @@ class StoryList extends Component {
       dataSource: this.state.dataSource.cloneWithRows(newProps.stories),
       refreshing: this.state.refreshing && newProps.isFetching,
     });
+  }
+
+  onPress(storyId) {
+    this.props.fetchComments(storyId);
   }
 
   onRefresh() {
@@ -58,7 +67,11 @@ class StoryList extends Component {
         dataSource={this.state.dataSource}
 
         renderRow={story =>
-          <Story key={story.id} story={story} />
+          <Story
+            key={story.id}
+            story={story}
+            onPress={this.onPress}
+          />
         }
 
         renderSeparator={(sectionId, rowId) =>
@@ -83,12 +96,13 @@ class StoryList extends Component {
 StoryList.propTypes = {
   stories: React.PropTypes.arrayOf(
     React.PropTypes.shape({
-      title: React.PropTypes.string.isRequired,
+      id: React.PropTypes.number.isRequired,
     }),
   ).isRequired,
   isFetching: React.PropTypes.bool.isRequired,
-  fetchStories: React.PropTypes.func.isRequired,
   page: React.PropTypes.number.isRequired,
+  fetchStories: React.PropTypes.func.isRequired,
+  fetchComments: React.PropTypes.func.isRequired,
 };
 
 export default StoryList;

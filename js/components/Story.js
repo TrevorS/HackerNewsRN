@@ -10,14 +10,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const Story = ({ story }) => (
-  <TouchableOpacity>
-    <View style={styles.story}>
-      <StoryDetails story={story} />
-      <StoryMetrics story={story} />
-    </View>
-  </TouchableOpacity>
-);
+const Story = ({ story, onPress }) => {
+  const onPressByStory = () => onPress(story.id);
+
+  return (
+    <TouchableOpacity onPress={onPressByStory}>
+      <View style={styles.story}>
+        <StoryDetails story={story} />
+        <StoryMetrics story={story} />
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 Story.propTypes = {
   story: React.PropTypes.shape({
@@ -29,6 +33,7 @@ Story.propTypes = {
     score: React.PropTypes.number.isRequired,
     commentCount: React.PropTypes.number.isRequired,
   }).isRequired,
+  onPress: React.PropTypes.func.isRequired,
 };
 
 export default Story;
