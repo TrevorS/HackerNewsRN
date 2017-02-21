@@ -80,7 +80,7 @@ class StoryList extends Component {
 
         refreshControl={
           <RefreshControl
-            refreshing={this.props.isFetching}
+            refreshing={this.state.refreshing}
             onRefresh={this.onRefresh}
           />
         }
