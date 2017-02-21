@@ -5,6 +5,26 @@ const hoursSince = time =>
 
 const commentCount = (descendants = 0) => descendants;
 
+const doesExist = (by, text) => Boolean(by && text);
+
+const createStory = story => ({
+  id: story.id,
+  title: story.title,
+  by: story.by,
+  url: story.url,
+  score: story.score,
+  hoursSince: hoursSince(story.time),
+  commentCount: commentCount(story.descendants),
+});
+
+const createComment = comment => ({
+  id: comment.id,
+  by: comment.by,
+  text: comment.text,
+  hoursSince: hoursSince(comment.time),
+  doesExist: doesExist(comment.by, comment.text),
+});
+
 const getPageIds = (ids, page = 1) => {
   const start = (page - 1) * PER_PAGE;
   const end = page * PER_PAGE;
@@ -12,14 +32,4 @@ const getPageIds = (ids, page = 1) => {
   return ids.slice(start, end);
 };
 
-const createStory = story => ({
-  id: story.val().id,
-  title: story.val().title,
-  by: story.val().by,
-  hoursSince: hoursSince(story.val().time),
-  url: story.val().url,
-  score: story.val().score,
-  commentCount: commentCount(story.val().descendants),
-});
-
-export { getPageIds, createStory };
+export { getPageIds, createStory, createComment };
